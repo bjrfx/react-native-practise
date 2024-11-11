@@ -6,6 +6,8 @@ import {
   ScrollView,
   FlatList,
   Pressable,
+  Modal,
+  Image,
 } from "react-native";
 import { styles, textInput } from "./style";
 import { useState } from "react";
@@ -13,7 +15,7 @@ import { useState } from "react";
 export default function Styling() {
   const [enteredGoalText, setEnteredGoalText] = useState("");
   const [courseGoals, setCourseGoals] = useState([]);
-  // const [modalIsVisible, setModalIsVisible] = useState(false);
+  const [modalIsVisible, setModalIsVisible] = useState(false);
 
   function goalInputHandler(enteredText) {
     setEnteredGoalText(enteredText);
@@ -21,26 +23,56 @@ export default function Styling() {
   function addGoalHandler() {
     setCourseGoals((currentCourseGoals) => [
       ...currentCourseGoals,
-      {text: enteredGoalText, id: Math.random().toString() },
+      { text: enteredGoalText, id: Math.random().toString() },
     ]);
-    setEnteredGoalText("")
+    setEnteredGoalText("");
+    endAddGoalHandler();
   }
   function deleteGoalHandler(id) {
-    setCourseGoals(currentCourseGoals => {
+    setCourseGoals((currentCourseGoals) => {
       return currentCourseGoals.filter((goal) => goal.id !== id);
-    })
+    });
+  }
+  function startAddGoalHandler() {
+    setModalIsVisible(true);
+  }
+  function endAddGoalHandler() {
+    setModalIsVisible(false)
   }
   return (
     <View style={styles.appContainer}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.textInput}
-          placeholder={textInput}
-          onChangeText={goalInputHandler}
-          value={enteredGoalText}
-        />
-        <Button title="Add goal" color={"crimson"} onPress={addGoalHandler} />
-      </View>
+      <Button
+        title="Add Goal"
+        color={"green"}
+        onPress={startAddGoalHandler}
+      />
+      <Modal visible={modalIsVisible} animationType="slide" transparent={false}>
+        <View style={styles.modalOverlay}>
+        <View style={styles.inputContainer}>
+          <Image style={styles.image} source={require('../../assets/images/goal.png')}/>
+        <Text style={{color: 'white', textAlign: 'center', fontWeight: 'bold', fontSize: 30, marginBottom: '15%'}}>Add your Goals</Text>
+          <TextInput
+            style={styles.textInput}
+            placeholder={textInput}
+            onChangeText={goalInputHandler}
+            value={enteredGoalText}
+            placeholderTextColor="white"
+          />
+          <View style={styles.buttonContainer}>
+            <View style={styles.button}>
+              <Button
+                title="Add"
+                color={"green"}
+                onPress={addGoalHandler}
+              />
+            </View>
+            <View style={styles.button}>
+              <Button title="Cancel" color={"crimson"} onPress={() => {endAddGoalHandler()}}/>
+            </View>
+          </View>
+        </View>
+        </View>
+      </Modal>
       <View style={styles.goalsContainer}>
         {/* This is a Scroll View ---- */}
         {/* <ScrollView>
@@ -58,18 +90,21 @@ export default function Styling() {
         <FlatList
           data={courseGoals}
           keyExtractor={(item, index) => {
-            return item.id
+            return item.id;
           }}
           renderItem={(itemData) => {
             return (
               <View style={styles.goalItem}>
-              <Pressable android_ripple={{color: '#bbbbbb'}} onPress={() => deleteGoalHandler(itemData.item.id)}>
-                <Text style={styles.goalText}>
-                {itemData.index + 1}
-                {". "}
-                {itemData.item.text + " " + itemData.item.id}
-              </Text>
-              </Pressable>
+                <Pressable
+                  android_ripple={{ color: "#bbbbbb" }}
+                  onPress={() => deleteGoalHandler(itemData.item.id)}
+                >
+                  <Text style={styles.goalText}>
+                    {itemData.index + 1}
+                    {". "}
+                    {itemData.item.text + " " + itemData.item.id}
+                  </Text>
+                </Pressable>
               </View>
             );
           }}

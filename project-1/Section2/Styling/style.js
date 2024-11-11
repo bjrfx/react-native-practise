@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
-const textInput = " Your Goal..!";
+let textInput = " Tap to enter Your Goal";
+textInput = textInput.toLocaleUpperCase();
 const styles = StyleSheet.create({
   appContainer: {
     padding: 50,
@@ -8,22 +9,24 @@ const styles = StyleSheet.create({
   },
 
   inputContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: "column",
+    justifyContent: "center",
     alignItems: 'center',
     marginBottom: 24,
-    borderBottomWidth: 1,
+    // borderBottomWidth: 1,
     borderBottomColor: "#cccccc",
-    flex: 1
+    flex: 1,
+    padding: 16
   },
 
   textInput: {
     borderWidth: 1,
     borderColor: '#cccccc',
-    width: '70%',
-    marginRight: 20,
+    width: '100%',
+    marginRight: 10,
     padding: 8,
-    backgroundColor: 'white',
+    backgroundColor: 'rgba(220, 20, 60, 0.3)',
+    color: '#fff',
   },
 
   goalsContainer: {
@@ -47,6 +50,25 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 6,
     backgroundColor: 'crimson',
+  },
+
+  buttonContainer: {
+    flexDirection: 'row',
+    marginTop: 16
+  },
+
+  button: {
+    width: 100,
+    marginHorizontal: 8
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'black', // Semi-transparent overlay background
+  },
+  image: {
+    width: 100,
+    height: 100,
+    margin: 10
   }
 });
 
