@@ -30,14 +30,24 @@ const styles = StyleSheet.create({
     flex:5
   },
 
-  goalsList: {
-    color: "#fff",
-    borderColor: '#cccccc',
-    borderWidth: 1,
-    marginBottom: 10,
-    padding: 10,
-    backgroundColor: 'crimson'
+  // goalsList: {
+  //   color: "#fff",
+  //   borderColor: '#cccccc',
+  //   borderWidth: 1,
+  //   marginBottom: 10,
+  //   padding: 10,
+  //   backgroundColor: 'crimson'
+  // },
+  goalText: {
+    color: '#fff',
+    padding: 10
   },
+
+  goalItem: {
+    margin: 10,
+    borderRadius: 6,
+    backgroundColor: 'crimson',
+  }
 });
 
 export {styles, textInput}
